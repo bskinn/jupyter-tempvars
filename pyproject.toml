@@ -1,0 +1,26 @@
+[build-system]
+requires = ["wheel", "setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+include = '''
+(
+    ^/tests/.*[.]py$
+  | ^/src/jupyter_tempvars/.*[.]py$
+  | ^/setup[.]py
+  | ^/conftest[.]py
+)
+'''
+exclude = '''
+(
+    __pycache__
+  | ^/[.]
+  | ^/doc
+  | ^/env
+)
+'''
+
+[tool.interrogate]
+fail-under = 100
+verbose = 1
