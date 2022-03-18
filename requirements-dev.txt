@@ -1,5 +1,9 @@
+black
 build
 interrogate
+isort
+jupyter
+jupyter-contrib-nbextensions
 pep517
 pre-commit
 pytest>=4.4.0
