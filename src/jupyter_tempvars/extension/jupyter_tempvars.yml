@@ -1,0 +1,7 @@
+Type: Jupyter Notebook Extension
+Compatibility: 5.x
+Name: Temporary Variables
+Main: jupyter_tempvars.js
+Link: https://github.com/bskinn/jupyter-tempvars/
+Description: |
+  (to be added later)
