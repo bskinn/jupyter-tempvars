@@ -32,11 +32,10 @@ def _jupyter_nbextension_paths():
     This is where the extension actually gets linked in.
 
     """
-    # TODO: Figure out if 'src' and 'dest' are actually correct here.
     return [
         {
             "section": "notebook",
             "src": "extension",
-            "dest": "extension",
+            "dest": "jupyter_tempvars",
         }
     ]
