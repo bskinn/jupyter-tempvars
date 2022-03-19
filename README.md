@@ -34,6 +34,23 @@ deleted after cell execution.
 The other way currently to define temp vars is:
 
 ```
-%tempvars end_with _t
-```
+%tempvars end_with t_
 
+**Notes**
+
+Install the overall thing:
+
+`pip install jupyter-tempvars`
+
+Install the Jupyter extension:
+
+`jupyter nbextension install --user --py jupyter_tempvars`
+
+Activate Jupyter extension in configurator (if installed),
+or on CLI (as prompted by Jupyter):
+
+`jupyter nbextension enable jupyter_tempvars --user --py
+
+To load the IPython extension and enable the magics:
+
+`In [ ]: %load_ext jupyter_tempvars`
