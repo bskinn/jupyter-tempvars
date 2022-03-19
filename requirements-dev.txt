@@ -8,6 +8,7 @@ pep517
 pre-commit
 pytest>=4.4.0
 restview
+tempvars
 twine
 -r requirements-flake8.txt
 -e .
