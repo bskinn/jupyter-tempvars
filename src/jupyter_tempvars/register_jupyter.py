@@ -1,4 +1,4 @@
-r"""``jupyter_tempvars`` *package definition module*.
+r"""``jupyter_tempvars`` *Jupyter extension registration function module*.
 
 ``jupyter_tempvars`` is a Jupyter notebook extension providing automatic
 per-cell temporary variables management.
@@ -25,7 +25,17 @@ per-cell temporary variables management.
 
 """
 
-from jupyter_tempvars.version import __version__
 
-from jupyter_tempvars.register_ipython import load_ipython_extension
-from jupyter_tempvars.register_jupyter import _jupyter_nbextension_paths
+def _jupyter_nbextension_paths():
+    """Provide paths for client-side extensions.
+
+    This is where the extension actually gets linked in.
+
+    """
+    return [
+        {
+            "section": "notebook",
+            "src": "extension",
+            "dest": "jupyter_tempvars",
+        }
+    ]

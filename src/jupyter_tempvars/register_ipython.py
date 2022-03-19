@@ -1,4 +1,4 @@
-r"""``jupyter_tempvars`` *extension registration function module*.
+r"""``jupyter_tempvars`` *IPython extension registration function module*.
 
 ``jupyter_tempvars`` is a Jupyter notebook extension providing automatic
 per-cell temporary variables management.
@@ -7,7 +7,7 @@ per-cell temporary variables management.
     Brian Skinn (brian.skinn@gmail.com)
 
 **File Created**
-    17 Mar 2022
+    18 Mar 2022
 
 **Copyright**
     \(c) Brian Skinn 2022
@@ -25,17 +25,11 @@ per-cell temporary variables management.
 
 """
 
+from IPython.core.magic import register_line_magic
 
-def _jupyter_nbextension_paths():
-    """Provide paths for client-side extensions.
-
-    This is where the extension actually gets linked in.
-
-    """
-    return [
-        {
-            "section": "notebook",
-            "src": "extension",
-            "dest": "jupyter_tempvars",
-        }
-    ]
+def load_ipython_extension(ipython):
+    """Register the magics."""
+    @register_line_magic
+    def testmagic(line):
+        print(line)
+        
