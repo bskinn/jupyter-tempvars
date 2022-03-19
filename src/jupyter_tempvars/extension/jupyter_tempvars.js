@@ -11,8 +11,9 @@
  */
 
 define([
+  'base/js/namespace',
   'notebook/js/codecell'
-], function (codecell) {
+], function (Jupyter, codecell) {
 
     "use strict";
 
@@ -20,6 +21,17 @@ define([
 
     return {
         load_ipython_extension: function () {
+            console.log('[jupyter-tempvars] initializing metadata')
+            let md = Jupyter.notebook.metadata;
+            md["tempvars"] = {};
+            let tv = md["tempvars"];
+            tv["universal"] = false;
+
+            // tv["set_universal"] = (val) => {tv["universal"] = val};
+
+            console.log('[jupyter-tempvars] defining helpers');
+            
+
             console.log('[jupyter-tempvars] patching CodeCell.execute');
             var orig_execute = CodeCell.prototype.execute;
 

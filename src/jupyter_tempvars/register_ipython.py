@@ -26,10 +26,23 @@ per-cell temporary variables management.
 """
 
 from IPython.core.magic import register_line_magic
+from IPython.display import Javascript
 
 def load_ipython_extension(ipython):
-    """Register the magics."""
+    """Register the magics and configure the globals."""
+    # This use of Javascript doesn't work
+    Javascript("console.log('loading extension');")
+    
     @register_line_magic
-    def testmagic(line):
-        print(line)
+    def tempvars(line):
+        subcommand, arg = line.strip().split(" ")
+        print(f"sc: {subcommand}, arg: {arg}")
+        
+        if subcommand == "universal":
+            print('universal reached')
+            #TODO: Error if not a boolean word
+            
+            # These uses don't work either.
+            Javascript("console.log('printy');")
+            Javascript(f"Jupyter.notebook.metadata['tempvars']['universal'] = {arg.lower()};")
         
