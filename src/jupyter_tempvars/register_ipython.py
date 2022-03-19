@@ -25,13 +25,40 @@ per-cell temporary variables management.
 
 """
 
-from IPython.core.magic import register_line_magic
-from IPython.display import Javascript
+from IPython.core.magic import Magics, magics_class, line_magic, register_line_magic
+from IPython.core.magics.display import Javascript
+    
+# Make sure not import IPython.display.Javascript?
+
+    
+# @magics_class
+# class TempvarsMagics(Magics):
+    
+#     universal = False
+    
+#     @line_magic
+#     def tempvars(self, line):
+#         return self.shell
+        
+#         # self.shell.user_ns is the user variables!
+
 
 def load_ipython_extension(ipython):
     """Register the magics and configure the globals."""
-    # This use of Javascript doesn't work
+    # This use of Javascript doesn't work)
     Javascript("console.log('loading extension');")
+
+    # ipython.register_magics(TempvarsMagics)
+    
+    # @register_line_magic
+    # def vardir(line):
+    #     nonlocal ipython
+    #     print(dir(eval(line)))
+    
+    # @register_line_magic
+    # def inject_ipython(line):
+    #     nonlocal ipython
+    #     globals().update({'ipython': ipython})
     
     @register_line_magic
     def tempvars(line):
@@ -45,4 +72,3 @@ def load_ipython_extension(ipython):
             # These uses don't work either.
             Javascript("console.log('printy');")
             Javascript(f"Jupyter.notebook.metadata['tempvars']['universal'] = {arg.lower()};")
-        
