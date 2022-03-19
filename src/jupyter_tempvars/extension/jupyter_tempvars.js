@@ -5,6 +5,11 @@
  * Wrap all cell-executed code with a TempVars context manager
  * to handle temporary variables.
  * 
+ * Code-patching implementation adapted from the execution_dependencies
+ * Jupyter extension:
+ * 
+ *  https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tree/master/src/jupyter_contrib_nbextensions/nbextensions/execution_dependencies
+ * 
  * 
  * @author  Brian Skinn, https://github.com/bskinn
  * 
@@ -25,9 +30,10 @@ define([
             let md = Jupyter.notebook.metadata;
             md["tempvars"] = {};
             let tv = md["tempvars"];
-            tv["universal"] = false;
 
-            // tv["set_universal"] = (val) => {tv["universal"] = val};
+            tv["universal"] = false;
+            tv["start_with"] = [];
+            tv["end_with"] = [];
 
             console.log('[jupyter-tempvars] defining helpers');
             

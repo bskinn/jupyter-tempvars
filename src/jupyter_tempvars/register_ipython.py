@@ -25,50 +25,24 @@ per-cell temporary variables management.
 
 """
 
-from IPython.core.magic import Magics, magics_class, line_magic, register_line_magic
-from IPython.core.magics.display import Javascript
-    
-# Make sure not import IPython.display.Javascript?
-
-    
-# @magics_class
-# class TempvarsMagics(Magics):
-    
-#     universal = False
-    
-#     @line_magic
-#     def tempvars(self, line):
-#         return self.shell
-        
-#         # self.shell.user_ns is the user variables!
+from IPython.core.magic import register_line_magic
+from IPython.display import display, Javascript
 
 
 def load_ipython_extension(ipython):
     """Register the magics and configure the globals."""
-    # This use of Javascript doesn't work)
-    Javascript("console.log('loading extension');")
 
-    # ipython.register_magics(TempvarsMagics)
-    
-    # @register_line_magic
-    # def vardir(line):
-    #     nonlocal ipython
-    #     print(dir(eval(line)))
-    
-    # @register_line_magic
-    # def inject_ipython(line):
-    #     nonlocal ipython
-    #     globals().update({'ipython': ipython})
-    
     @register_line_magic
     def tempvars(line):
         subcommand, arg = line.strip().split(" ")
         print(f"sc: {subcommand}, arg: {arg}")
-        
+
         if subcommand == "universal":
-            print('universal reached')
-            #TODO: Error if not a boolean word
-            
-            # These uses don't work either.
-            Javascript("console.log('printy');")
-            Javascript(f"Jupyter.notebook.metadata['tempvars']['universal'] = {arg.lower()};")
+            print("universal reached")
+            # TODO: Error if not a boolean word
+            display(
+                Javascript(
+                    "Jupyter.notebook.metadata['tempvars']['universal'] "
+                    f"= {arg.lower()};"
+                )
+            )
