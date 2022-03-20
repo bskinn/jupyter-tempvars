@@ -35,10 +35,8 @@ def load_ipython_extension(ipython):
     @register_line_magic
     def tempvars(line):
         subcommand, arg = line.strip().split(" ")
-        print(f"sc: {subcommand}, arg: {arg}")
 
         if subcommand == "universal":
-            print("universal reached")
             # TODO: Error if not a boolean word
             display(
                 Javascript(
