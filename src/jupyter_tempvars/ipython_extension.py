@@ -26,7 +26,6 @@ per-cell temporary variables management.
 """
 
 from IPython.core.magic import register_line_magic
-from IPython.display import display, Javascript
 
 from jupyter_tempvars.const import MD_IDENTIFIER, MD_UNIVERSAL
 from jupyter_tempvars.error import JupyterTempvarsMagicError
@@ -37,7 +36,6 @@ def load_ipython_extension(ipython):
     ns = ipython.user_ns
 
     ns.update({MD_IDENTIFIER: (metadata := {})})
-    # metadata = ns[MD_IDENTIFIER]
 
     @register_line_magic
     def tempvars(line):
