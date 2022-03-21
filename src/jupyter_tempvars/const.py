@@ -27,5 +27,8 @@ per-cell temporary variables management.
 
 COMM_NAME = COMM_IDENTIFIER = "_tempvars_comm"
 
-MD_IDENTIFIER = "_tempvars_metadata"
-MD_UNIVERSAL = "universal"
+METADATA_IDENTIFIER = "_tempvars_metadata"
+
+METADATA_KEY_END = "end_with"
+METADATA_KEY_START = "start_with"
+METADATA_KEY_UNIVERSAL = "universal"
