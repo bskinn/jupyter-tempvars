@@ -65,8 +65,7 @@ def load_ipython_extension(ipython):
 
 def _handle_universal(arg, metadata):
     """Apply the indicated value to the 'universal' setting."""
-    val = arg in ["1", "true", "on"]
-    metadata.update({METADATA_KEY_UNIVERSAL: val})
+    metadata.update({METADATA_KEY_UNIVERSAL: arg in ["1", "true", "on"]})
 
 
 def _get_parser():
