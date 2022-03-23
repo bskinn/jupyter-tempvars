@@ -27,9 +27,12 @@ per-cell temporary variables management.
 
 import argparse as ap
 import shlex
+from time import sleep
+
 
 from IPython.core.magic import register_line_magic
 
+from jupyter_tempvars.comm import recreate_comm
 from jupyter_tempvars.const import (
     SETTINGS_IDENTIFIER,
     SETTINGS_KEY_END_WITH,
@@ -48,6 +51,8 @@ SUBCOMMAND_UNIVERSAL = "universal"
 SUBCOMMAND_START_WITH = "start_with"
 SUBCOMMAND_END_WITH = "end_with"
 
+COMM_NAME = "_jupyter_tempvars_comm"
+
 
 def load_ipython_extension(ipython):
     """Register the magics and configure the globals."""
@@ -57,6 +62,17 @@ def load_ipython_extension(ipython):
     settings = ns[SETTINGS_IDENTIFIER]
 
     prs = _get_parser()
+
+    try:
+        comm = [
+            c
+            for c in ipython.kernel.comm_manager.comms.values()
+            if c.target_name == COMM_NAME
+        ][0]
+    except (AttributeError, IndexError):
+        comm = recreate_comm()
+
+    _send_settings(comm, settings)
 
     @register_line_magic
     def tempvars(line):
@@ -74,6 +90,8 @@ def load_ipython_extension(ipython):
 
         if arg_vars[KEY_SUBCOMMAND] == SUBCOMMAND_END_WITH:
             _handle_end_with(arg_vars[SETTINGS_KEY_END_WITH], settings)
+
+        _send_settings(comm, settings)
 
 
 def _handle_universal(arg, settings):
@@ -129,3 +147,15 @@ def _get_parser():
     )
 
     return prs
+
+
+def _send_settings(comm, settings, *, delay=1):
+    """Pass the settings to the frontend over the indicated comm.
+
+    Waits for the indicated delay (in seconds) before returning.
+
+    Skips sending if comm is None.
+
+    """
+    comm.send(settings)
+    sleep(delay)
