@@ -25,10 +25,10 @@ per-cell temporary variables management.
 
 """
 
-COMM_NAME = COMM_IDENTIFIER = "_tempvars_comm"
+COMM_NAME = COMM_IDENTIFIER = "_jupyter_tempvars_comm"
 
-METADATA_IDENTIFIER = "_tempvars_metadata"
+SETTINGS_IDENTIFIER = "_jupyter_tempvars_settings"
 
-METADATA_KEY_END = "end_with"
-METADATA_KEY_START = "start_with"
-METADATA_KEY_UNIVERSAL = "universal"
+SETTINGS_KEY_END_WITH = "end_with"
+SETTINGS_KEY_START_WITH = "start_with"
+SETTINGS_KEY_UNIVERSAL = "universal"
