@@ -24,28 +24,27 @@ define([
 
     var CodeCell = codecell.CodeCell
     var comm_name = "_jupyter_tempvars_comm"
-    // var settings
+    var settings
 
     return {
         load_ipython_extension: function () {
 
             var register_comms = () => {
-                console.log('[jupyter-tempvars] registering communicator endpoints')
-
-                if ( ! comm_name in Jupyter.notebook.kernel.comm_manager.comms) {
-                    Jupyter.notebook.kernel.comm_manager.register_target(
-                        comm_name,
-                        (comm, msg) => {
-                            comm.on_msg( m => {console._jupyter_tempvars_retval = m.content.data})
-                        }
-                    );
-                }
-
                 Jupyter.notebook.kernel.execute(
                     `if "_Comm" not in dir():
                         from ipykernel.comm import Comm as _Comm
                         _jupyter_tempvars_comm = _Comm(target_name='${comm_name}')`
                 );
+
+                if ( ! (comm_name in Jupyter.notebook.kernel.comm_manager.targets)) {
+                    Jupyter.notebook.kernel.comm_manager.register_target(
+                        comm_name,
+                        (comm, msg) => {
+                            comm.on_msg( m => {settings = m.content.data})
+                        }
+                    );
+                }
+
             }
 
             console.log('[jupyter-tempvars] patching CodeCell.execute');
@@ -57,7 +56,6 @@ define([
 
                 console.log('[jupyter-tempvars] retrieving settings')
                 Jupyter.notebook.kernel.execute("_jupyter_tempvars_comm.send(_jupyter_tempvars_settings)")
-                var settings = console._jupyter_tempvars_retval
                 console.log(settings)
 
                 const is_tempvars = (e) => e == "tempvars";
