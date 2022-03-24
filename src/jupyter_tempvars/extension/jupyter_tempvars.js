@@ -24,20 +24,19 @@ define([
 
     var CodeCell = codecell.CodeCell
     var c_log = (msg) => {console.log(`[jupyter-tempvars] ${msg}`);};
+    const is_tempvars = (tag) => tag.startsWith("tempvars");
 
     return {
         load_ipython_extension: function () {
             c_log('importing TempVars');
             /* Timeout is needed because kernel isn't immediately available when extension
              * loading is initiated */
-            setTimeout(() => {Jupyter.notebook.kernel.execute("from tempvars import TempVars");}, 2000);
+            setTimeout(() => {Jupyter.notebook.kernel.execute("from tempvars import TempVars as _TempVars");}, 2000);
 
             c_log('patching CodeCell.execute');
             var orig_execute = CodeCell.prototype.execute;
 
             CodeCell.prototype.execute = function (stop_on_error) {
-                const is_tempvars = (tag) => tag.startsWith("tempvars");
-
                 var tags = this.metadata.tags || [];  // Could do this by inspecting first line of cell text, too
 
                 if (tags.some(is_tempvars)) {
@@ -47,11 +46,11 @@ define([
                     tags.forEach( tag => {  // Switch to accumulating all starts/ends, and only using one TempVars?
                         if ( tag.startsWith("tempvars-start-") ) {
                             new_text = new_text.replaceAll("\n", "\n    ");
-                            new_text = `with TempVars(starts=['${tag.substring(15)}']):\n    ${new_text}`;
+                            new_text = `with _TempVars(starts=['${tag.substring(15)}']):\n    ${new_text}`;
                         }
                         if ( tag.startsWith("tempvars-end-") ) {
                             new_text = new_text.replaceAll("\n", "\n    ");
-                            new_text = `with TempVars(ends=['${tag.substring(13)}']):\n    ${new_text}`;
+                            new_text = `with _TempVars(ends=['${tag.substring(13)}']):\n    ${new_text}`;
                         }
                     });
 
