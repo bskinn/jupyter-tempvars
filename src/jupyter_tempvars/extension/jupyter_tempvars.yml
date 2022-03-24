@@ -1,7 +1,10 @@
 Type: Jupyter Notebook Extension
-Compatibility: 6.x
+Compatibility: 4.x, 5.x, 6.x
 Name: Temporary Variables
 Main: jupyter_tempvars.js
 Link: https://github.com/bskinn/jupyter-tempvars/
 Description: |
-  (to be added later)
+  Uses per-cell tag annotations to mark code cells whose contents should be surrounded
+  by a tempvars.TempVars context manager, to automatically clear matching variables
+  from the notebook namespace both before and after cell execution, to avoid
+  the common problem of flaky notebook behavior due to namespace pollution.
