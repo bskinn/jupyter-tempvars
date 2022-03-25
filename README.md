@@ -42,7 +42,7 @@ as temporary variables. This means that:
 
 I've been developing `jupyter-tempvars` using Python 3.9, but I believe any
 version of Python 3 that works with the underlying `tempvars` library
-(and that should be all actively maintained versions, 3.7+!) should work fine.
+(which should be all actively maintained versions, 3.7+) should work fine.
 
 ### Jupyter
 
@@ -67,13 +67,32 @@ main Jupyter interface is really handy. See the install instructions
 
 ## Installation
 
+The first step is to install the overall `jupyter-tempvars` package.
+It's on PyPI, so just:
 
-- `jupyter-tempvars`
-  - `pip`
-  - `jupyter nbextension install --user --py jupyter_tempvars`
-  - If no configurator: `jupyter nbextension enable jupyter_tempvars --user --py`
-- Run Jupyter
-- Turn on 'Temporary Variables' in the `Nbextensions` tab
+```
+$ pip install jupyter-tempvars
+```
+
+From there, the `jupyter_tempvars` extension needs to be installed into the
+Jupyter environment. The project ships with a helper script to simplify
+the most common case, installation into the current user's extension registry:
+
+```
+$ jupyter-tempvars install
+```
+
+Now that the extension is installed, it needs to be activated,
+either in the `Nbextensions` Jupyter tab of the configurator:
+
+<a href="media/enable_extension.gif"><img src="media/enable_extension.gif" alt="Animation of activing the extension" width="300"></a>
+<small><em>(click for full size image)</em></small>
+
+or by running the helper script with the `enable` command:
+
+```
+$ jupyter-tempvars enable
+```
 
 ## Usage
 
