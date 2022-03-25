@@ -55,6 +55,9 @@ Donate = "https://github.com/sponsors/bskinn"
 Homepage = "https://github.com/bskinn/jupyter-tempvars"
 Thank = "https://twitter.com/btskinn"
 
+[project.scripts]
+jupyter-tempvars = 'jupyter_tempvars.cli:main'
+
 
 [tool.setuptools]
 include-package-data = true
