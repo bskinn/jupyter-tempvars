@@ -1,6 +1,76 @@
 [build-system]
-requires = ["wheel", "setuptools"]
 build-backend = "setuptools.build_meta"
+requires = [
+  "setuptools",
+  "trove-classifiers",
+  "wheel",
+]
+
+[project]
+name = "jupyter_tempvars"
+description = "Jupyter notebook extension providing per-cell temporary variables"
+keywords = [
+  "extension",
+  "jupyter",
+  "notebook",
+  "temporary variables",
+]
+requires-python = ">=3.7"
+dependencies = [
+  "tempvars",
+]
+dynamic = [
+  "version",
+]
+classifiers = [
+  "License :: OSI Approved",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Framework :: Jupyter",
+  "Intended Audience :: Science/Research",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Scientific/Engineering",
+  "Development Status :: 4 - Beta",
+]
+
+[project.license]
+text = "MIT License"
+
+[[project.authors]]
+name = "Brian Skinn"
+email = "brian.skinn@gmail.com"
+
+[project.urls]
+Changelog = "https://github.com/bskinn/jupyter-tempvars/blob/main/CHANGELOG.md"
+Docs = "https://jupyter-tempvars.readthedocs.io/en/stable/"
+Donate = "https://github.com/sponsors/bskinn"
+Homepage = "https://github.com/bskinn/jupyter-tempvars"
+Thank = "https://twitter.com/btskinn"
+
+
+[tool.setuptools]
+include-package-data = true
+platforms = [ "any",]
+license-files = [ "LICENSE.txt",]
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+[tool.setuptools.package-data]
+"*" = [ 'extension/jupyter_tempvars.*', ]
+
+[tool.setuptools.packages.find]
+where = [ "src",]
+namespaces = false
+
 
 [tool.black]
 line-length = 88
