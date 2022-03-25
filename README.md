@@ -8,31 +8,32 @@
 
 Namespace pollution with leftover/temporary variables is a
 common challenge of using Jupyter notebooks. It's a downside
-of the power provided by the shared global notebook namespace
+of the power provided by the shared global notebook namespace,
 for things like exploratory data analysis.
 
 And, it can be a pretty big downside. It's quite annoying
 to work for hours to try to figure out what's wrong with a notebook,
-only to have it suddenly work properly when you restart Jupyer.
-It's also quite annoying to discover that a workbook that you *thought*
+only to have it suddenly work properly when you restart Jupyter.
+It's also quite annoying to have a workbook that you *thought*
 was working correctly, suddely *stop* working once you restart.
 It can cause even bigger problems if you pass a notebook
-on to someone else, and it doesnt work right for them even though
-it was working fine for you.
+on to someone else, and then it doesn't work right for them even
+though it was working fine for you.
 
 `jupyter-tempvars` is a Jupyter nbextension built on the
 [`tempvars` Python package](https://github.com/bskinn/tempvars)
 that helps minimize these kinds of problems. Simply decorate code
-cells with tags matching a defined template, and then variables
+cells with metadata tags matching a defined template, and then variables
 that fit the rules you define will be automatically treated
 as temporary variables. This means that:
 
- 1. Matching variables are removed from the global namespace before the cell is executed,
-    ensuring that your code isn't contaminated by "dragged-in" variables, ***and***
+ 1. Matching variables will be removed from the global namespace before
+    each tagged cell is executed, ensuring that cell isn't contaminated
+    by "dragged-in" variables, ***and***
 
- 2. Matching variables are removed from the global namespace after the cell has
+ 2. Matching variables will be removed from the global namespace after the cell has
     finished executing, ensuring that other code cells aren't contaminated by
-    this cell.
+    this cell, either.
 
 
 ## Prerequisites
@@ -91,7 +92,8 @@ management tool, take a look at the
 If you want to manage temporary variables when using, e.g.,
 [`nbclient`](https://github.com/jupyter/nbclient) or
 [`nbmake`](https://github.com/treebeardtech/nbmake),
-you should look into using `tempvars` directly in your code.
+you should look into using `tempvars` directly in your code,
+instead of `jupyter-tempvars`.
 
 ----
 
