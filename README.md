@@ -43,6 +43,9 @@ as temporary variables. This means that:
 I've been developing `jupyter-tempvars` using Python 3.9, but I believe any
 version of Python 3 that works with the underlying `tempvars` library
 (which should be all actively maintained versions, 3.7+) should work fine.
+It should work on any platform supported by Jupyter.
+(At some point soon here, I'll be figuring out a test suite to actually
+check across platforms and Pythons....)
 
 ### Jupyter
 
@@ -75,8 +78,9 @@ $ pip install jupyter-tempvars
 ```
 
 From there, the `jupyter_tempvars` extension needs to be installed into the
-Jupyter environment. The project ships with a helper script to simplify
-the most common case, installation into the current user's extension registry:
+Jupyter environment itself. The `juypter-tempvars` project ships with a
+helper script to simplify the most common case, where the extension is
+installed into the user-scope extension registry:
 
 ```
 $ jupyter-tempvars install
@@ -85,8 +89,8 @@ $ jupyter-tempvars install
 Now that the extension is installed, it needs to be activated,
 either in the `Nbextensions` Jupyter tab of the configurator:
 
-<a href="media/enable_extension.gif"><img src="media/enable_extension.gif" alt="Animation of activing the extension" width="300"></a>
-<small><em>(click for full size image)</em></small>
+<a href="media/enable_extension.gif"><img src="media/enable_extension.gif" alt="Animation of activing the extension" width="400"></a>
+<small><em><br/>(click for full size image)</em></small>
 
 or by running the helper script with the `enable` command:
 
@@ -95,6 +99,27 @@ $ jupyter-tempvars enable
 ```
 
 ## Usage
+
+As of v0.1, `jupyter-tempvars` supports two filters for identifying
+temporary variables, a 'starts with' filter and an 'ends with' filter.
+Both methods use the built-in Jupyter capability to attach metadata to
+each cell in a notebook. The first step to use `jupyter-tempvars` is
+to turn on the `Tags` metadata cell headers:
+
+(list of instructions)
+
+(GIF)
+
+Then, for each cell you want `jupyter-tempvars` to handle temporary
+variables, add a tag with one of the following two formats:
+
+- To treat all variables starting with a given prefix as temporary,
+  use `tempvars-start-{prefix}`
+
+- To treat all variables ending with a given suffix as temporary,
+  use `tempvars-end-{suffix}`
+
+So, for example, to
 
 *Right now, just cell tag metadata and starts/ends.*
 
