@@ -26,6 +26,19 @@ per-cell temporary variables management.
 """
 
 
-from jupyter_tempvars.ipython_extension import load_ipython_extension
-from jupyter_tempvars.register_jupyter import _jupyter_nbextension_paths
 from jupyter_tempvars.version import __version__
+
+
+def _jupyter_nbextension_paths():
+    """Provide paths for client-side extensions.
+
+    This is where the extension actually gets linked in.
+
+    """
+    return [
+        {
+            "section": "notebook",
+            "src": "extension",
+            "dest": "jupyter_tempvars",
+        }
+    ]

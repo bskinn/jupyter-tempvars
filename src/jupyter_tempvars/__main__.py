@@ -1,4 +1,4 @@
-r"""``jupyter_tempvars`` *constants definition module*.
+r"""``jupyter_tempvars`` *package execution module*.
 
 ``jupyter_tempvars`` is a Jupyter notebook extension providing automatic
 per-cell temporary variables management.
@@ -7,7 +7,7 @@ per-cell temporary variables management.
     Brian Skinn (brian.skinn@gmail.com)
 
 **File Created**
-    20 Mar 2022
+    25 Mar 2022
 
 **Copyright**
     \(c) Brian Skinn 2022
@@ -25,10 +25,10 @@ per-cell temporary variables management.
 
 """
 
-COMM_NAME = COMM_IDENTIFIER = "_jupyter_tempvars_comm"
+import sys
 
-SETTINGS_IDENTIFIER = "_jupyter_tempvars_settings"
+from jupyter_tempvars.cli import main
 
-SETTINGS_KEY_END_WITH = "end_with"
-SETTINGS_KEY_START_WITH = "start_with"
-SETTINGS_KEY_UNIVERSAL = "universal"
+# Spoof so help usage shows "jupyter-tempvars"
+sys.argv[0] = "jupyter-tempvars"
+sys.exit(main())

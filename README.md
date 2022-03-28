@@ -1,56 +1,154 @@
-# jupyter-tempvars
-Jupyter extension providing automatic management of per-cell temporary variables
+# jupyter-tempvars: Convenient temporary variable management in Jupyter Notebook
 
-*Project is early-alpha WIP. Notes here are for future cleanup into a proper README.*
+**Do you work in Jupyter Notebook?**
 
-Jupyter notebooks are great for exploratory data analysis,
-but a big problem with them is the potential for namespace pollution.
-Something you define in one cell is accidentally used in another cell...
-you make a typo and accidentally refer to something from another cell...
-you run cells in a different order, and a "temporary" variable in a cell
-causes the calculation in the cell you run to give different results,
-or throw an exception.
+**Are your notebooks flaky sometimes, due to leftover/temporary variables?**
 
-What would be nice, is to have an easy way of declaring certain variables
-to be "cell-local" -- to be temporary variables, not meant to survive
-the scope of the cell in which they're used.
+`jupyter-tempvars` can help!
 
-This repo is a Jupyter notebook extension providing exactly this functionality.
-It's built on the `tempvars` Python package, which provides a context manager
-allowing this kind of temporary variable management. This extension wires into
-the cell execution machinery to automatically surround every cell with
-a `TempVars` context manager, with the variable identification/definition
-defined by a line magic:
+Namespace pollution with leftover/temporary variables is a
+common challenge of using Jupyter notebooks. It's a downside
+of the power provided by the shared global notebook namespace,
+for things like exploratory data analysis.
+
+And, it can be a pretty big downside. It's quite annoying
+to work for hours to try to figure out what's wrong with a notebook,
+only to have it suddenly work properly when you restart Jupyter.
+It's also quite annoying to have a workbook that you *thought*
+was working correctly, suddely *stop* working once you restart.
+It can cause even bigger problems if you pass a notebook
+on to someone else, and then it doesn't work right for them even
+though it was working fine for you.
+
+`jupyter-tempvars` is a Jupyter nbextension built on the
+[`tempvars` Python package](https://github.com/bskinn/tempvars)
+that helps minimize these kinds of problems. Simply decorate code
+cells with metadata tags matching a defined template, and then variables
+that fit the rules you define will be automatically treated
+as temporary variables. This means that:
+
+ 1. Matching variables will be removed from the global namespace before
+    each tagged cell is executed, ensuring that cell isn't contaminated
+    by "dragged-in" variables, ***and***
+
+ 2. Matching variables will be removed from the global namespace after the cell has
+    finished executing, ensuring that other code cells aren't contaminated by
+    this cell, either.
+
+
+## Prerequisites
+
+### Python
+
+I've been developing `jupyter-tempvars` using Python 3.9, but I believe any
+version of Python 3 that works with the underlying `tempvars` library
+(which should be all actively maintained versions, 3.7+) should work fine.
+It should work on any platform supported by Jupyter.
+(At some point soon here, I'll be figuring out a test suite to actually
+check across platforms and Pythons....)
+
+### Jupyter
+
+`jupyter-tempvars` requires a full instance of [Jupyter Notebook](https://jupyter.org/),
+including the Javascript frontend. So far, I've only tested it with vanilla Jupyter,
+but in theory I think it should work with JupyterHub, Jupyter in Anaconda, etc.
+I would be grateful for feedback from anyone who tries to use it in
+other contexts. I believe it should work with `notebook` versions 4.x and above.
+Note that `jupyter-tempvars` will **NOT** work with JupyterLab!
+
+To get a basic Jupyter install just `pip install jupyter`.
+
+### `jupyter-contrib-nbextensions`
+
+The community-developed
+[`jupyter-contrib-nbextensions` package](https://github.com/ipython-contrib/jupyter_contrib_nbextensions)
+is not strictly required in order to use `jupyter-tempvars`, but it's highly recommended.
+If nothing else, the configurator plugin that adds a `Nbextensions` tab to the
+main Jupyter interface is really handy. See the install instructions
+[here](https://jupyter-contrib-nbextensions.readthedocs.io/en/latest/install.html).
+
+
+## Installation
+
+The first step is to install the overall `jupyter-tempvars` package.
+It's on PyPI, so just:
 
 ```
-%tempvars start_with t_
+$ pip install jupyter-tempvars
 ```
 
-This line magic will cause all variables whose names start with `t_` to behave
-as temporary variables: They will be unset before cell execution, and
-any that are created in the course of cell execution will be
-deleted after cell execution.
-
-The other way currently to define temp vars is:
+From there, the `jupyter_tempvars` extension needs to be installed into the
+Jupyter environment itself. The `juypter-tempvars` project ships with a
+helper script to simplify the most common case, where the extension is
+installed into the user-scope extension registry:
 
 ```
-%tempvars end_with t_
+$ jupyter-tempvars install
+```
 
-**Notes**
+Now that the extension is installed, it needs to be activated,
+either in the `Nbextensions` Jupyter tab of the configurator:
 
-Install the overall thing:
+<a href="media/enable_extension.gif"><img src="media/enable_extension.gif" alt="Animation of activing the extension" width="400"></a>
+<small><em><br/>(click for full size image)</em></small>
 
-`pip install jupyter-tempvars`
+or by running the helper script with the `enable` command:
 
-Install the Jupyter extension:
+```
+$ jupyter-tempvars enable
+```
 
-`jupyter nbextension install --user --py jupyter_tempvars`
+## Usage
 
-Activate Jupyter extension in configurator (if installed),
-or on CLI (as prompted by Jupyter):
+As of v0.1, `jupyter-tempvars` supports two filters for identifying
+temporary variables, a 'starts with' filter and an 'ends with' filter.
+Both methods use the built-in Jupyter capability to attach metadata to
+each cell in a notebook. The first step to use `jupyter-tempvars` is
+to turn on the `Tags` metadata cell headers:
 
-`jupyter nbextension enable jupyter_tempvars --user --py
+(list of instructions)
 
-To load the IPython extension and enable the magics:
+(GIF)
 
-`In [ ]: %load_ext jupyter_tempvars`
+Then, for each cell you want `jupyter-tempvars` to handle temporary
+variables, add a tag with one of the following two formats:
+
+- To treat all variables starting with a given prefix as temporary,
+  use `tempvars-start-{prefix}`
+
+- To treat all variables ending with a given suffix as temporary,
+  use `tempvars-end-{suffix}`
+
+So, for example, to
+
+*Right now, just cell tag metadata and starts/ends.*
+
+
+## Advanced Variable Management via `tempvars`
+
+`jupyter-tempvars` only exposes a subset of the functionality
+provided by the underlying `tempvars` Python package. If you need
+a more powerful temporary variable
+management tool, take a look at the
+[full capabilities](https://tempvars.readthedocs.io/en/latest/usage.html) of `tempvars`.
+
+`jupyter-tempvars` also requires the full Jupyter notebook frontend to function.
+If you want to manage temporary variables when using, e.g.,
+[`nbclient`](https://github.com/jupyter/nbclient) or
+[`nbmake`](https://github.com/treebeardtech/nbmake),
+you should look into using `tempvars` directly in your code,
+instead of `jupyter-tempvars`.
+
+----
+
+Available (soon) on [PyPI](https://pypi.org/project/jupyter-tempvars).
+
+Source on [GitHub](https://github.com/bskinn/jupyter-tempvars).
+Bug reports and feature requests are welcomed at the
+[Issues](https://github.com/bskinn/jupyter-tempvars/issues) page there.
+
+Copyright (c) Brian Skinn 2022
+
+License: The MIT License. See
+[LICENSE.txt](https://github.com/bskinn/sphobjinv/blob/main/LICENSE.txt)
+for full license terms.
