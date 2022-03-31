@@ -132,7 +132,7 @@ The first step to use `jupyter-tempvars` is to display the
 <kbd><a href="media/show_cell_tags.gif"><img src="media/show_cell_tags.gif" alt="Animation showing the cell tag headers" width="100%" style="border: 1px solid #444"></a></kbd>
 
 Then, for each cell you want `jupyter-tempvars` to handle temporary
-variables, add a tag with one of the following two formats:
+variables, add a tag to that cell with one of the following two formats:
 
 - To treat all variables starting with a given prefix as temporary,
   use `tempvars-start-{prefix}`
@@ -145,13 +145,19 @@ as temporary variables, tag the cell with `tempvars-start-t_`:
 
 <kbd><a href="media/tempvars_start_demo.gif"><img src="media/tempvars_start_demo.gif" alt="Animation demonstrating the starts-with tag" width="100%" style="border: 1px solid #444"></a></kbd>
 
+Similarly, to treat all variables that end with `_temp` as temporary,
+tag the cell with `tempvars-end-_temp`:
 
-*ends with example*
+<kbd><a href="media/tempvars_end_demo.gif"><img src="media/tempvars_end_demo.gif" alt="Animation demonstrating the ends-with tag" width="100%" style="border: 1px solid #444"></a></kbd>
+
+The `tempvars-` tags can be used multiple times, and in combination:
+
 
 *both starts and ends together*
 
 *show tempvars also cleared if present on entering the cell*
 
+*restrictions -- underscores*
 
 ## Advanced Variable Management via `tempvars`
 
