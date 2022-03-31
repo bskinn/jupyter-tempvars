@@ -89,7 +89,7 @@ $ jupyter-tempvars install
 Now that the extension is installed, it needs to be activated,
 either in the `Nbextensions` Jupyter tab of the configurator:
 
-<kbd><a href="media/enable_extension.gif"><img src="media/enable_extension.gif" alt="Animation of activing the extension" width="100%" style="border: 1px solid #444"></a></kbd>
+<kbd><a href="media/enable_extension.gif"><img src="media/enable_extension.gif" alt="Animation of activing the extension" width="100%"></a></kbd>
 
 or by running the helper script with the `enable` command:
 
@@ -129,7 +129,7 @@ The first step to use `jupyter-tempvars` is to display the
 1. Open an `.ipynb` notebook.
 2. In the toolbar, click `View` > `Cell Toolbar` > `Tags`
 
-<kbd><a href="media/show_cell_tags.gif"><img src="media/show_cell_tags.gif" alt="Animation showing the cell tag headers" width="100%" style="border: 1px solid #444"></a></kbd>
+<kbd><a href="media/show_cell_tags.gif"><img src="media/show_cell_tags.gif" alt="Animation showing the cell tag headers" width="100%"></a></kbd>
 
 Then, for each cell you want `jupyter-tempvars` to handle temporary
 variables, add a tag to that cell with one of the following two formats:
@@ -143,19 +143,25 @@ variables, add a tag to that cell with one of the following two formats:
 So, for example, to treat all variables in a cell that start with `t_`
 as temporary variables, tag the cell with `tempvars-start-t_`:
 
-<kbd><a href="media/tempvars_start_demo.gif"><img src="media/tempvars_start_demo.gif" alt="Animation demonstrating the starts-with tag" width="100%" style="border: 1px solid #444"></a></kbd>
+<kbd><a href="media/tempvars_start_demo.gif"><img src="media/tempvars_start_demo.gif" alt="Animation demonstrating the starts-with tag" width="100%"></a></kbd>
 
 Similarly, to treat all variables that end with `_temp` as temporary,
 tag the cell with `tempvars-end-_temp`:
 
-<kbd><a href="media/tempvars_end_demo.gif"><img src="media/tempvars_end_demo.gif" alt="Animation demonstrating the ends-with tag" width="100%" style="border: 1px solid #444"></a></kbd>
+<kbd><a href="media/tempvars_end_demo.gif"><img src="media/tempvars_end_demo.gif" alt="Animation demonstrating the ends-with tag" width="100%"></a></kbd>
 
-The `tempvars-` tags can be used multiple times, and in combination:
+The `tempvars-` tags can be used multiple times, and in combination with each other:
 
 
-*both starts and ends together*
+*both 2x starts and ends together*
+
+Temporary variables are also cleared from the namespace before executing the cell:
 
 *show tempvars also cleared if present on entering the cell*
+
+The underlying `tempvars` library has the capability to restore cleared temporary variables
+back to the global namespace after execution. If this feature would be of interest,
+please comment [here](https://github.com/bskinn/jupyter-tempvars/issues/21).
 
 *restrictions -- underscores*
 
