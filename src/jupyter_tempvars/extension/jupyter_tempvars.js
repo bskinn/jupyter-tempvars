@@ -1,14 +1,17 @@
 /**
  * jupyter_tempvars.js
  *
- * (needs improving)
- * Wrap all cell-executed code with a TempVars context manager
- * to handle temporary variables.
+ * Wrap all code in suitable tagged code cells with a
+ * tempvars.TempVars context manager to handle temporary variables.
  *
  * Code-patching implementation adapted from the execution_dependencies
  * Jupyter extension:
  *
  *  https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tree/master/src/jupyter_contrib_nbextensions/nbextensions/execution_dependencies
+ *
+ * Event-based import of TempVars on kernel_ready adapted from jupyter-black:
+ *
+ *  https://github.com/drillan/jupyter-black/blob/d197945508a9d2879f2e2cc99cafe0cedf034cf2/kernel_exec_on_cell.js#L347
  *
  *
  * @author  Brian Skinn, https://github.com/bskinn
@@ -17,8 +20,9 @@
 
 define([
   'base/js/namespace',
+  'base/js/events',
   'notebook/js/codecell'
-], function (Jupyter, codecell) {
+], function (Jupyter, events, codecell) {
 
     "use strict";
 
@@ -28,10 +32,11 @@ define([
 
     return {
         load_ipython_extension: function () {
-            c_log('importing TempVars');
-            /* Timeout is needed because kernel isn't immediately available when extension
-             * loading is initiated */
-            setTimeout(() => {Jupyter.notebook.kernel.execute("from tempvars import TempVars as _TempVars");}, 2000);
+            c_log('adding TempVars import upon kernel_ready event')
+            events.on("kernel_ready.Kernel", function(evt, data) {
+                c_log("importing _TempVars");
+                Jupyter.notebook.kernel.execute("from tempvars import TempVars as _TempVars");
+            });
 
             c_log('patching CodeCell.execute');
             var orig_execute = CodeCell.prototype.execute;
