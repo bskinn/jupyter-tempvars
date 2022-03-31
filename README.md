@@ -89,8 +89,7 @@ $ jupyter-tempvars install
 Now that the extension is installed, it needs to be activated,
 either in the `Nbextensions` Jupyter tab of the configurator:
 
-<a href="media/enable_extension.gif"><img src="media/enable_extension.gif" alt="Animation of activing the extension" width="100%" style="border: 1px solid #444"></a>
-<small><em><br/>(click for full size image)</em></small>
+<kbd><a href="media/enable_extension.gif"><img src="media/enable_extension.gif" alt="Animation of activing the extension" width="100%" style="border: 1px solid #444"></a></kbd>
 
 or by running the helper script with the `enable` command:
 
@@ -130,8 +129,7 @@ The first step to use `jupyter-tempvars` is to display the
 1. Open an `.ipynb` notebook.
 2. In the toolbar, click `View` > `Cell Toolbar` > `Tags`
 
-<a href="media/show_cell_tags.gif"><img src="media/show_cell_tags.gif" alt="Animation showing the cell tag headers" width="100%" style="border: 1px solid #444"></a>
-<small><em><br/>(click for full size image)</em></small>
+<kbd><a href="media/show_cell_tags.gif"><img src="media/show_cell_tags.gif" alt="Animation showing the cell tag headers" width="100%" style="border: 1px solid #444"></a></kbd>
 
 Then, for each cell you want `jupyter-tempvars` to handle temporary
 variables, add a tag with one of the following two formats:
@@ -145,8 +143,7 @@ variables, add a tag with one of the following two formats:
 So, for example, to treat all variables in a cell that start with `t_`
 as temporary variables, tag the cell with `tempvars-start-t_`:
 
-<a href="media/tempvars_start_demo.gif"><img src="media/tempvars_start_demo.gif" alt="Animation demonstrating the starts-with tag" width="100%" style="border: 1px solid #444"></a>
-<small><em><br/>(click for full size image)</em></small>
+<kbd><a href="media/tempvars_start_demo.gif"><img src="media/tempvars_start_demo.gif" alt="Animation demonstrating the starts-with tag" width="100%" style="border: 1px solid #444"></a></kbd>
 
 
 *ends with example*
