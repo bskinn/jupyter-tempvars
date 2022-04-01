@@ -48,6 +48,13 @@ define([
             /*
              * Logic for patching a cell's code with _TempVars
              */
+
+            /**
+             * Format the 'starts' argument to _TempVars based on the cell's tags.
+             * @param {string[]} tags - The list of tags on the cell.
+             * @returns {string} - The fully formatted keyword argument, 'starts=[...]',
+             * or an empty string if there are no 'starts' tags.
+             */
             var format_starts = function (tags) {
                 var starts = []
 
@@ -58,6 +65,12 @@ define([
                 return (starts.length == 0 ? "" : 'starts=["' + starts.join('", "') + '"]');
             }
 
+            /**
+             * Format the 'ends' argument to _TempVars based on the cell's tags.
+             * @param {string[]} tags - The list of tags on the cell.
+             * @returns {string} - The fully formatted keyword argument, 'ends=[...]',
+             * or an empty string if there are no 'ends' tags.
+             */
             var format_ends = function (tags) {
                 var ends = []
 
