@@ -81,7 +81,12 @@ define([
                 return (ends.length == 0 ? "" : 'ends=["' + ends.join(':, "') + '"]');
             }
 
-            var construct_context_mgr = function (tags) {
+            /**
+             * Format the full 'with _TempVars' line given the provided array of tags.
+             * @param {string[]} tags - The list of tags on the cell.
+             * @returns {string} - The formatted 'with _TempVars' line.
+             */
+            var format_context_mgr = function (tags) {
                 var start = format_starts(tags);
                 var end = format_ends(tags);
 
@@ -95,16 +100,23 @@ define([
                 return `with _TempVars(${args.join(", ")}):\n`;
             }
 
-            var modify_code = function (orig_text, tags) {
+            /**
+             * Indent 'orig_code' and wrap with a _TempVars context manager
+             * based on 'tags'.
+             * @param {string} orig_code - Original code to be wrapped.
+             * @param {string[]} tags - Array of tags for the code cell.
+             * @returns {string} - New code, wrapped with _TempVars.
+             */
+            var apply_ctx_mgr = function (orig_code, tags) {
                 // No change if code block is empty
-                if ( orig_text.length == 0 ) { return orig_text; }
+                if ( orig_code.length == 0 ) { return orig_code; }
 
-                var ctx_mgr = construct_context_mgr(tags);
+                var ctx_mgr = format_context_mgr(tags);
 
                 if (ctx_mgr.length == 0 ) {
-                    return orig_text;
+                    return orig_code;
                 } else {
-                    return ctx_mgr + indent_str + orig_text.replaceAll("\n", `\n${indent_str}`);
+                    return ctx_mgr + indent_str + orig_code.replaceAll("\n", `\n${indent_str}`);
                 }
             }
 
@@ -119,12 +131,12 @@ define([
                 var tags = this.metadata.tags || [];  // Could do this by inspecting first line of cell text, too
 
                 if (tags.some(is_tempvars)) {
-                    var orig_text = this.get_text();
-                    var new_text = modify_code(orig_text, tags);
+                    var orig_code = this.get_text();
+                    var new_code = apply_ctx_mgr(orig_code, tags);
 
-                    this.set_text(new_text);
+                    this.set_text(new_code);
                     orig_execute.call(this, stop_on_error);
-                    this.set_text(orig_text);
+                    this.set_text(orig_code);
                 } else {
                     orig_execute.call(this, stop_on_error);
                 }
