@@ -112,8 +112,8 @@ It's important to also upgrade `tempvars` whenever you upgrade
 from a newer version of `tempvars`.
 
 If you pin `jupyter-tempvars` to a specific version using `pip freeze`,
-or with a tool like `poetry` or `pipenv`, you should also make sure
-that `tempvars` gets updated, if needed, as well as `jupyter-tempvars`.
+or with a tool like `poetry` or `pipenv`, you should make sure
+that the pins for both `tempvars` and `jupyter-tempvars` get updated.
 
 
 ## Usage
@@ -158,10 +158,11 @@ Temporary variables are also cleared from the namespace before executing the cel
 
 <kbd><a href="media/tempvars_clear_on_start.gif"><img src="media/tempvars_clear_on_start.gif" alt="Animation demonstrating variable clearing entering a tempvars cell" width="100%"></a></kbd>
 
-The above example also reveals how `jupyter-tempvars` works under the hood: the cell's
-code is enclosed with a
+The traceback in the above example also reveals how `jupyter-tempvars`
+works under the hood: the cell's code is enclosed with a
 [`tempvars.TempVars`](https://tempvars.readthedocs.io/en/latest/api.html#tempvars.TempVars)
-context manager before submission to the kernel for execution. One side effect
+context manager (imported to the notebook namespace as `_TempVars`)
+before submission to the kernel for execution. One side effect
 of this implementation is that the result of the last line of the code is not
 echoed to output and must be explicitly `print`-ed:
 
@@ -184,10 +185,11 @@ management tool, take a look at the
 [full capabilities](https://tempvars.readthedocs.io/en/latest/usage.html) of `tempvars`.
 
 `jupyter-tempvars` also requires the full Jupyter notebook frontend to function.
-If you want to manage temporary variables when using, e.g.,
+If you want to manage temporary variables when using a tool that
+interacts with notebooks outside the context of the Jupyter frontend (e.g.,
 [`nbclient`](https://github.com/jupyter/nbclient) or
-[`nbmake`](https://github.com/treebeardtech/nbmake),
-you should look into using `tempvars` directly in your code,
+[`nbmake`](https://github.com/treebeardtech/nbmake)),
+you should consider using `tempvars` directly in your code,
 instead of `jupyter-tempvars`.
 
 ----
