@@ -61,8 +61,8 @@ jupyter-tempvars = 'jupyter_tempvars.cli:main'
 
 [tool.setuptools]
 include-package-data = true
-platforms = [ "any",]
-license-files = [ "LICENSE.txt",]
+platforms = [ "any", ]
+license-files = [ "LICENSE.txt", ]
 
 [tool.setuptools.package-dir]
 "" = "src"
@@ -71,7 +71,7 @@ license-files = [ "LICENSE.txt",]
 "*" = [ 'extension/jupyter_tempvars.*', ]
 
 [tool.setuptools.packages.find]
-where = [ "src",]
+where = [ "src", ]
 namespaces = false
 
 

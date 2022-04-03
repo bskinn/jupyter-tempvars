@@ -112,8 +112,8 @@ It's important to also upgrade `tempvars` whenever you upgrade
 from a newer version of `tempvars`.
 
 If you pin `jupyter-tempvars` to a specific version using `pip freeze`,
-or with a tool like `poetry` or `pipenv`, you should also make sure
-that `tempvars` gets updated, if needed, as well as `jupyter-tempvars`.
+or with a tool like `poetry` or `pipenv`, you should make sure
+that the pins for both `tempvars` and `jupyter-tempvars` get updated.
 
 
 ## Usage
@@ -152,18 +152,29 @@ tag the cell with `tempvars-end-_temp`:
 
 The `tempvars-` tags can be used multiple times, and in combination with each other:
 
-
-*both 2x starts and ends together*
+<kbd><a href="media/tempvars_multiple_demo.gif"><img src="media/tempvars_multiple_demo.gif" alt="Animation demonstrating multiple tag use" width="100%"></a></kbd>
 
 Temporary variables are also cleared from the namespace before executing the cell:
 
-*show tempvars also cleared if present on entering the cell*
+<kbd><a href="media/tempvars_clear_on_start.gif"><img src="media/tempvars_clear_on_start.gif" alt="Animation demonstrating variable clearing entering a tempvars cell" width="100%"></a></kbd>
+
+The traceback in the above example also reveals how `jupyter-tempvars`
+works under the hood: the cell's code is enclosed with a
+[`tempvars.TempVars`](https://tempvars.readthedocs.io/en/latest/api.html#tempvars.TempVars)
+context manager (imported to the notebook namespace as `_TempVars`)
+before submission to the kernel for execution. One side effect
+of this implementation is that the result of the last line of the code is not
+echoed to output and must be explicitly `print`-ed:
+
+<kbd><a href="media/tempvars_print_needed.gif"><img src="media/tempvars_print_needed.gif" alt="Animation demonstrating suppression of output" width="100%"></a></kbd>
 
 The underlying `tempvars` library has the capability to restore cleared temporary variables
 back to the global namespace after execution. If this feature would be of interest,
 please comment [here](https://github.com/bskinn/jupyter-tempvars/issues/21).
+More generally, bug reports and feature requests of any kind for both
+[`jupyter-tempvars`](https://github.com/bskinn/jupyter-tempvars/issues) and the underlying
+[`tempvars`](https://github.com/bskinn/tempvars/issues) library are always welcome.
 
-*restrictions -- underscores*
 
 ## Advanced Variable Management via `tempvars`
 
@@ -174,15 +185,16 @@ management tool, take a look at the
 [full capabilities](https://tempvars.readthedocs.io/en/latest/usage.html) of `tempvars`.
 
 `jupyter-tempvars` also requires the full Jupyter notebook frontend to function.
-If you want to manage temporary variables when using, e.g.,
+If you want to manage temporary variables when using a tool that
+interacts with notebooks outside the context of the Jupyter frontend (e.g.,
 [`nbclient`](https://github.com/jupyter/nbclient) or
-[`nbmake`](https://github.com/treebeardtech/nbmake),
-you should look into using `tempvars` directly in your code,
+[`nbmake`](https://github.com/treebeardtech/nbmake)),
+you should consider using `tempvars` directly in your code,
 instead of `jupyter-tempvars`.
 
 ----
 
-Available (soon) on [PyPI](https://pypi.org/project/jupyter-tempvars).
+Available on [PyPI](https://pypi.org/project/jupyter-tempvars).
 
 Source on [GitHub](https://github.com/bskinn/jupyter-tempvars).
 Bug reports and feature requests are welcomed at the
