@@ -154,7 +154,7 @@ The `tempvars-` tags can be used multiple times, and in combination with each ot
 
 <kbd><a href="media/tempvars_multiple_demo.gif"><img src="media/tempvars_multiple_demo.gif" alt="Animation demonstrating multiple tag use" width="100%"></a></kbd>
 
-Temporary variables are also cleared from the namespace before executing the cell:
+Temporary variables are also cleared from the namespace before executing the tagged cell:
 
 <kbd><a href="media/tempvars_clear_on_start.gif"><img src="media/tempvars_clear_on_start.gif" alt="Animation demonstrating variable clearing entering a tempvars cell" width="100%"></a></kbd>
 
