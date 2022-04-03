@@ -152,18 +152,28 @@ tag the cell with `tempvars-end-_temp`:
 
 The `tempvars-` tags can be used multiple times, and in combination with each other:
 
-
-*both 2x starts and ends together*
+<kbd><a href="media/tempvars_multiple_demo.gif"><img src="media/tempvars_multiple_demo.gif" alt="Animation demonstrating multiple tag use" width="100%"></a></kbd>
 
 Temporary variables are also cleared from the namespace before executing the cell:
 
-*show tempvars also cleared if present on entering the cell*
+<kbd><a href="media/tempvars_clear_on_start.gif"><img src="media/tempvars_clear_on_start.gif" alt="Animation demonstrating variable clearing entering a tempvars cell" width="100%"></a></kbd>
+
+The above example also reveals how `jupyter-tempvars` works under the hood: the cell's
+code is enclosed with a
+[`tempvars.TempVars`](https://tempvars.readthedocs.io/en/latest/api.html#tempvars.TempVars)
+context manager before submission to the kernel for execution. One side effect
+of this implementation is that the result of the last line of the code is not
+echoed to output and must be explicitly `print`-ed:
+
+<kbd><a href="media/tempvars_print_needed.gif"><img src="media/tempvars_print_needed.gif" alt="Animation demonstrating suppression of output" width="100%"></a></kbd>
 
 The underlying `tempvars` library has the capability to restore cleared temporary variables
 back to the global namespace after execution. If this feature would be of interest,
 please comment [here](https://github.com/bskinn/jupyter-tempvars/issues/21).
+More generally, bug reports and feature requests of any kind for both
+[`jupyter-tempvars`](https://github.com/bskinn/jupyter-tempvars/issues) and the underlying
+[`tempvars`](https://github.com/bskinn/tempvars/issues) library are always welcome.
 
-*restrictions -- underscores*
 
 ## Advanced Variable Management via `tempvars`
 
@@ -182,7 +192,7 @@ instead of `jupyter-tempvars`.
 
 ----
 
-Available (soon) on [PyPI](https://pypi.org/project/jupyter-tempvars).
+Available on [PyPI](https://pypi.org/project/jupyter-tempvars).
 
 Source on [GitHub](https://github.com/bskinn/jupyter-tempvars).
 Bug reports and feature requests are welcomed at the
