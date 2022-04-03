@@ -164,7 +164,7 @@ works under the hood: the cell's code is enclosed with a
 context manager (imported to the notebook namespace as `_TempVars`)
 before submission to the kernel for execution. One side effect
 of this implementation is that the result of the last line of the code is not
-echoed to output and must be explicitly `print`-ed:
+echoed to output for tagged cells, and must be explicitly `print`-ed:
 
 <kbd><a href="media/tempvars_print_needed.gif"><img src="media/tempvars_print_needed.gif" alt="Animation demonstrating suppression of output" width="100%"></a></kbd>
 
