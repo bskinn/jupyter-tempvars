@@ -5,7 +5,11 @@ from setuptools import setup
 
 NAME = "jupyter-tempvars"
 
-exec(Path("src", "jupyter_tempvars", "version.py").read_text(encoding="utf-8"))
+exec_vars = {}
+exec(
+    Path("src", "jupyter_tempvars", "version.py").read_text(encoding="utf-8"), exec_vars
+)
+__version__ = exec_vars["__version__"]
 
 
 doc_version_override = None
