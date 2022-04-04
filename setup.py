@@ -11,16 +11,16 @@ exec(Path("src", "jupyter_tempvars", "version.py").read_text(encoding="utf-8"))
 doc_version_override = None
 media_ref_override = "main"
 
-url_prefix_template = f"https://github.com/bskinn/{NAME}/raw/{{ref}}/media"
+media_url_prefix_template = f"https://github.com/bskinn/{NAME}/raw/{{ref}}/media"
 
 
 def readme():
     content = Path("README.md").read_text(encoding="utf-8")
 
-    new_doc_ver = doc_version_override or __version__
+    new_doc_ver = doc_version_override or "v" + __version__
 
     new_media_ref = media_ref_override or "v" + __version__
-    new_media_url_prefix = url_prefix_template.format(ref=new_media_ref)
+    new_media_url_prefix = media_url_prefix_template.format(ref=new_media_ref)
 
     def content_update(content, pattern, sub):
         """Perform a case-insensitive regex sub on the given content."""
@@ -29,14 +29,14 @@ def readme():
     # Docs reference updates to current release version, for PyPI
     # This one gets the badge image
     content = content_update(
-        content, r"(?<=/readthedocs/{0}/)\S+?(?=\.svg$)".format(NAME), "v" + new_doc_ver
+        content, r"(?<=/readthedocs/{0}/)\S+?(?=\.svg$)".format(NAME), new_doc_ver
     )
 
     # This one gets the RtD links
     content = content_update(
         content,
         r"(?<={0}\.readthedocs\.io/en/)\S+?(?=/)".format(NAME),
-        "v" + new_doc_ver,
+        new_doc_ver,
     )
 
     # This replaces all of the href= links to the full-size GIFs in <a> tags
