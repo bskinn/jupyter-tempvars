@@ -1,7 +1,7 @@
 [build-system]
 build-backend = "setuptools.build_meta"
 requires = [
-  "setuptools>=61",
+  "setuptools>=62",
   "trove-classifiers",
   "wheel",
 ]
@@ -21,6 +21,7 @@ dependencies = [
 ]
 dynamic = [
   "version",
+  "readme",
 ]
 classifiers = [
   "License :: OSI Approved",
