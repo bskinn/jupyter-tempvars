@@ -7,7 +7,7 @@ requires = [
 ]
 
 [project]
-name = "jupyter_tempvars"
+name = "jupyter-tempvars"
 description = "Jupyter notebook extension providing per-cell temporary variables"
 keywords = [
   "extension",
