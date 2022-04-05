@@ -168,8 +168,8 @@ echoed to output for tagged cells, and must be explicitly `print`-ed:
 
 <kbd><a href="media/tempvars_print_needed.gif"><img src="media/tempvars_print_needed.gif" alt="Animation demonstrating suppression of output" width="100%"></a></kbd>
 
-The underlying `tempvars` library has the capability to restore temporary variables
-cleared at the start of tagged cell execution, back to the global namespace
+The underlying `tempvars` library has the capability to restore pre-existing temporary variables,
+cleared before the start of tagged cell execution, back to the global namespace
 after execution has completed. If this feature would be of interest for `jupyter-tempvars`,
 please comment [here](https://github.com/bskinn/jupyter-tempvars/issues/21).
 More generally, bug reports and feature requests of any kind for both
