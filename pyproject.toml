@@ -1,13 +1,13 @@
 [build-system]
 build-backend = "setuptools.build_meta"
 requires = [
-  "setuptools>=61",
+  "setuptools>=62",
   "trove-classifiers",
   "wheel",
 ]
 
 [project]
-name = "jupyter_tempvars"
+name = "jupyter-tempvars"
 description = "Jupyter notebook extension providing per-cell temporary variables"
 keywords = [
   "extension",
@@ -21,6 +21,7 @@ dependencies = [
 ]
 dynamic = [
   "version",
+  "readme",
 ]
 classifiers = [
   "License :: OSI Approved",
