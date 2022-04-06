@@ -1,5 +1,17 @@
 # jupyter-tempvars: Convenient temporary variable management in Jupyter Notebook
 
+### Most Recent Stable Release:
+
+[![Most recent PyPI release](https://img.shields.io/pypi/v/jupyter-tempvars.svg?logo=pypi)](https://pypi.org/project/jupyter-tempvars)
+
+![Python versions supported](https://img.shields.io/pypi/pyversions/jupyter-tempvars.svg?logo=python)
+
+### Info:
+
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/bskinn/jupyter-tempvars/blob/stable/LICENSE.txt)
+
+[![black formatted](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 **Do you work in Jupyter Notebook?**
 
 **Are your notebooks flaky sometimes, due to leftover/temporary variables?**
@@ -96,6 +108,11 @@ or by running the helper script with the `enable` command:
 ```
 $ jupyter-tempvars enable
 ```
+
+Again, note that the `jupyter-tempvars` helper script is set up to install the extension
+to the user's Jupyter extension repository (`--user` flag to `jupyter nbextension`).
+If you wish to install to a different location, you'll need to invoke the necessary
+`jupyter nbextension` commands manually.
 
 
 ## Upgrading

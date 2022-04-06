@@ -13,7 +13,7 @@ __version__ = exec_vars["__version__"]
 
 
 doc_version_override = None
-media_ref_override = "main"
+media_ref_override = None
 
 media_url_prefix_template = f"https://github.com/bskinn/{NAME}/raw/{{ref}}/media"
 
