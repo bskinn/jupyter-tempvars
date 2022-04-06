@@ -109,7 +109,7 @@ or by running the helper script with the `enable` command:
 $ jupyter-tempvars enable
 ```
 
-Note that the `jupyter-tempvars` helper script is set up to install the extension
+Again, note that the `jupyter-tempvars` helper script is set up to install the extension
 to the user's Jupyter extension repository (`--user` flag to `jupyter nbextension`).
 If you wish to install to a different location, you'll need to invoke the necessary
 `jupyter nbextension` commands manually.
