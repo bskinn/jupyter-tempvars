@@ -221,5 +221,5 @@ Bug reports and feature requests are welcomed at the
 Copyright (c) Brian Skinn 2022
 
 License: The MIT License. See
-[LICENSE.txt](https://github.com/bskinn/sphobjinv/blob/main/LICENSE.txt)
+[LICENSE.txt](https://github.com/bskinn/jupyter-tempvars/blob/main/LICENSE.txt)
 for full license terms.
